@@ -16,7 +16,7 @@ export const siteConfig = {
     logo: "/brand/itinero-logo.svg",
   },
   contact: {
-    email: "hello@trynstudios.com",
+    email: "support@tryn.studio",
     phone: null as string | null,
     phoneNote: "Contact via email. We respond within 24 hours.",
     location: "Global, remote first",
