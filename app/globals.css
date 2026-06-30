@@ -521,29 +521,46 @@ body {
   border-color: var(--section-navy-border);
 }
 
-/* Hospitality trust band — slim credibility strip below hero */
-.hospitality-trust-band {
-  @apply border-t border-border;
+/* Hospitality trust band — auto-scrolling wordmark marquee below hero */
+.hospitality-marquee {
+  @apply relative overflow-hidden;
 }
 
-.hospitality-group-strip {
-  @apply flex flex-wrap items-center justify-center gap-2.5 sm:gap-3;
+.hospitality-marquee-viewport {
+  @apply overflow-hidden;
 }
 
-.hospitality-group-pill {
-  @apply inline-flex items-center gap-2.5 rounded-full border border-border bg-background/80 px-3.5 py-2 transition-colors duration-300 hover:border-foreground/15 hover:bg-background;
+.hospitality-marquee-track {
+  @apply m-0 flex w-max list-none items-center gap-10 p-0 sm:gap-14 lg:gap-16;
+  animation: hospitality-marquee-scroll 50s linear infinite;
 }
 
-.dark .hospitality-group-pill {
-  @apply bg-background/50 hover:bg-background/70;
+.hospitality-marquee:hover .hospitality-marquee-track {
+  animation-play-state: paused;
 }
 
-.hospitality-group-monogram {
-  @apply inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border bg-soft-gray/80 text-[9px] font-semibold tracking-[0.06em] text-muted;
+.hospitality-wordmark {
+  @apply shrink-0 select-none text-[clamp(1.125rem,2.4vw,1.625rem)] font-semibold leading-none text-foreground/30 transition-colors duration-300;
 }
 
-.hospitality-group-pill:hover .hospitality-group-monogram {
-  @apply border-foreground/15 bg-background text-foreground;
+.hospitality-marquee:hover .hospitality-wordmark {
+  @apply text-foreground/45;
+}
+
+@keyframes hospitality-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hospitality-marquee-track {
+    animation: none;
+    @apply w-full flex-wrap justify-center gap-x-8 gap-y-4;
+  }
 }
 
 /* Clients → trust credibility band */
