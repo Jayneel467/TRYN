@@ -8,7 +8,7 @@ export const portfolioBrands = [
     industry: "Travel & AI",
     role: "Parent Company · In development",
     description:
-      "Itinero is building an AI travel buddy for personalized trip planning, itineraries, and smarter bookings. TRYN Studios engineers the platform ahead of its public launch at itinero.company.",
+      "Founded by Jagannath, Itinero is building an AI travel buddy for personalized trip planning, itineraries, and smarter bookings. TRYN Studios engineers the platform ahead of its public launch at itinero.company.",
     href: "/work/itinero-travels",
     featured: true,
     metrics: [

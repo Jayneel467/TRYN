@@ -30,7 +30,7 @@ export default function WorkPage() {
       <PageHero
         eyebrow="Work"
         title="What we're building"
-        lead="TRYN Studios engineers the Itinero flagship in pre-launch, ships AI products for clients across industries, and partners with selected founders through the Founders Program."
+        lead="TRYN Studios engineers the Itinero flagship in pre-launch, founded by Jagannath, ships AI products for clients across industries, and partners with selected founders through the Founders Program."
       />
 
       <section className="section-padding-sm section-surface border-b border-border">

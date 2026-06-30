@@ -10,8 +10,9 @@ export const siteConfig = {
   parentCompany: {
     name: "Itinero Travels",
     legalName: "Itinero Travels Private Limited",
+    founder: "Jagannath",
     description:
-      "Parent company behind TRYN Studios, building an AI travel platform in pre-launch at itinero.company.",
+      "Parent company behind TRYN Studios, founded by Jagannath and building an AI travel platform in pre-launch at itinero.company.",
     url: "https://itinero.company",
     logo: "/brand/itinero-logo.svg",
   },

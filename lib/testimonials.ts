@@ -19,11 +19,11 @@ export const testimonials: Testimonial[] = [
     id: "itinero",
     quote:
       "TRYN Studios is the engineering team behind Itinero Travels. Together we're building an AI-powered travel platform with conversational trip planning, smart itineraries, and booking infrastructure, ahead of our public launch.",
-    author: "Rajesh Mehta",
+    author: "Jagannath",
     role: "Founder & CEO",
     company: "Itinero Travels",
     legalName: "Itinero Travels Private Limited",
-    initials: "RM",
+    initials: "J",
     rating: 5,
     featured: true,
     industry: "Travel & Hospitality",
@@ -130,7 +130,7 @@ export const videoTestimonials = [
   {
     id: "itinero-video",
     title: "Building Itinero Travels with TRYN",
-    speaker: "Rajesh Mehta",
+    speaker: "Jagannath",
     company: "Itinero Travels Private Limited",
     duration: "Coming soon",
     accent: "#0E7490",

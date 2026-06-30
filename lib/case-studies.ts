@@ -41,7 +41,7 @@ const itineroCaseStudies: CaseStudy[] = [
     description:
       "AI travel buddy for personalized trip planning, smart itineraries, and booking, in active development ahead of public launch.",
     summary:
-      "TRYN Studios is the dedicated engineering team building Itinero Travels, an AI-powered travel platform currently in pre-launch.",
+      "TRYN Studios is the dedicated engineering team building Itinero Travels, an AI-powered travel platform founded by Jagannath and currently in pre-launch.",
     metrics: [
       { label: "Status", value: "Pre-launch" },
       { label: "Launch", value: "Aug 21, 2026" },

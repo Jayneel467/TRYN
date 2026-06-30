@@ -43,7 +43,7 @@ export default function AboutPage() {
       <PageHero
         eyebrow="About TRYN"
         title="We build companies, not just software."
-        lead="TRYN Studios is an early-stage venture product engineering team. We're building Itinero Travels, an AI travel platform in pre-launch, and bring the same embedded engineering discipline to selected founder partners through our Founders Program."
+        lead="TRYN Studios is an early-stage venture product engineering team. We're building Itinero Travels, an AI travel platform in pre-launch founded by Jagannath, and bring the same embedded engineering discipline to selected founder partners through our Founders Program."
       >
         <Logo variant="full" className="mb-8 mt-6" />
       </PageHero>
