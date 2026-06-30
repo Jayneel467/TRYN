@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 68" role="img" aria-label="TRYN Studios">
+  <g transform="translate(0, 8)" fill="none" stroke="#FF8C1A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 0v28M8 8l6-8 6 8M5 28h18"/>
+  </g>
+  <text x="36" y="36" font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="30" font-weight="800" fill="#0B1F3A" letter-spacing="-0.04em">TRYN</text>
+  <text x="36" y="56" font-family="system-ui, -apple-system, BlinkMacSystemFont, sans-serif" font-size="9.5" font-weight="600" fill="#FF8C1A" letter-spacing="0.34em">STUDIOS</text>
+</svg>

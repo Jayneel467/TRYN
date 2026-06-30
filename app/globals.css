@@ -1,0 +1,1128 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --navy: #0b1f3a;
+  --navy-light: #1a3a5c;
+  --saffron: #ff8c1a;
+  --saffron-hover: #e67d15;
+  --soft-gray: #f6f7f9;
+  --muted: #4d5969;
+  --background: #ffffff;
+  --foreground: #0b1f3a;
+  --card: #ffffff;
+  --card-foreground: #0b1f3a;
+  --border: #e4e8ee;
+  --ring: #ff8c1a;
+  --ring-offset: #ffffff;
+  --radius: 0.5rem;
+  --shadow-color: 11 31 58;
+  --hero-bg: #ffffff;
+  --hero-fg: #0b1f3a;
+  --hero-muted: rgb(11 31 58 / 0.65);
+  --hero-subtle: rgb(11 31 58 / 0.5);
+  --hero-border: rgb(11 31 58 / 0.1);
+  --hero-stat-divider: rgb(11 31 58 / 0.12);
+  --section-navy-bg: #0b1f3a;
+  --section-navy-fg: #ffffff;
+  --section-navy-muted: rgb(255 255 255 / 0.6);
+  --section-navy-border: rgb(255 255 255 / 0.1);
+  --header-height: 4rem;
+}
+
+.dark {
+  --background: #0a0f18;
+  --foreground: #f1f5f9;
+  --card: #111827;
+  --card-foreground: #f1f5f9;
+  --border: #1e293b;
+  --soft-gray: #131a24;
+  --muted: #94a3b8;
+  --ring-offset: #0a0f18;
+  --navy: #152a45;
+  --navy-light: #1e3a5f;
+  --shadow-color: 0 0 0;
+  --hero-bg: linear-gradient(168deg, #0d1f35 0%, #101f33 48%, #0a1522 100%);
+  --hero-fg: #ffffff;
+  --hero-muted: rgb(255 255 255 / 0.65);
+  --hero-subtle: rgb(255 255 255 / 0.5);
+  --hero-border: rgb(255 255 255 / 0.1);
+  --hero-stat-divider: rgb(255 255 255 / 0.12);
+  --section-navy-bg: #0d1828;
+  --section-navy-fg: #f1f5f9;
+  --section-navy-muted: rgb(241 245 249 / 0.62);
+  --section-navy-border: rgb(255 255 255 / 0.1);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-navy: var(--navy);
+  --color-navy-light: var(--navy-light);
+  --color-saffron: var(--saffron);
+  --color-saffron-hover: var(--saffron-hover);
+  --color-soft-gray: var(--soft-gray);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-ring-offset: var(--ring-offset);
+  --font-sans: var(--font-tt-hoves);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  --radius-lg: var(--radius);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + 1rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Layout */
+.container-wide {
+  @apply mx-auto max-w-6xl;
+}
+
+.site-gutter {
+  @apply px-4 sm:px-6 lg:px-8;
+}
+
+.container-narrow {
+  @apply mx-auto max-w-3xl;
+}
+
+/* Section rhythm — editorial breathing room */
+.section-padding {
+  @apply px-4 py-16 sm:px-6 lg:px-8 lg:py-24;
+}
+
+.section-padding-sm {
+  @apply px-4 py-10 sm:px-6 lg:px-8 lg:py-14;
+}
+
+/* Homepage frame sections — one viewport per major band on laptop */
+.section-padding-frame {
+  @apply px-4 py-10 sm:px-6 sm:py-11 lg:px-8 lg:py-14;
+}
+
+.section-heading-frame {
+  @apply mb-6 max-w-2xl lg:mb-8;
+}
+
+.section-title-frame {
+  @apply text-[clamp(1.625rem,2.8vw,2.25rem)] leading-[1.1];
+}
+
+.section-subtitle-frame {
+  @apply mt-3 text-sm leading-[1.6] text-foreground/70 sm:text-[15px];
+}
+
+.section-surface {
+  @apply bg-background;
+}
+
+.section-muted {
+  @apply bg-soft-gray;
+}
+
+.section-navy {
+  background: var(--section-navy-bg);
+  color: var(--section-navy-fg);
+}
+
+.section-eyebrow {
+  @apply text-[11px] font-semibold uppercase tracking-[0.2em] text-muted;
+}
+
+.section-divider {
+  @apply border-t border-border;
+}
+
+/* Typography scale — executive weight hierarchy (color set per context) */
+.display-heading {
+  @apply text-[clamp(2.75rem,6vw,4.75rem)] font-bold leading-[1.02] tracking-[-0.045em];
+}
+
+.section-title {
+  @apply text-[clamp(1.875rem,3.5vw,2.75rem)] font-semibold leading-[1.08] tracking-[-0.04em];
+}
+
+.section-subtitle {
+  @apply mt-5 max-w-2xl text-base leading-[1.7] text-foreground/70 sm:text-[17px];
+}
+
+.body-lead {
+  @apply text-base leading-[1.65] sm:text-[17px];
+}
+
+.body-copy {
+  @apply text-sm leading-relaxed text-muted;
+}
+
+.nav-link {
+  @apply relative px-2.5 py-2 text-[13px] font-medium tracking-[-0.01em] text-foreground/55 transition-colors hover:text-foreground;
+}
+
+.nav-link::after {
+  content: "";
+  @apply absolute bottom-1 left-2.5 right-2.5 h-px origin-left scale-x-0 bg-current opacity-40 transition-transform duration-300;
+}
+
+.nav-link:hover::after,
+.nav-link-active::after {
+  @apply scale-x-100;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link::after {
+    transition: none;
+  }
+}
+
+.nav-link-active {
+  @apply text-foreground;
+}
+
+.nav-link-hero {
+  @apply relative px-2.5 py-2 text-[13px] font-medium tracking-[-0.01em] text-white/65 transition-colors hover:text-white;
+}
+
+.nav-link-hero::after {
+  content: "";
+  @apply absolute bottom-1 left-2.5 right-2.5 h-px origin-left scale-x-0 bg-current opacity-60 transition-transform duration-300;
+}
+
+.nav-link-hero:hover::after,
+.nav-link-active-hero::after {
+  @apply scale-x-100;
+}
+
+.nav-link-active-hero {
+  @apply text-white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-link-hero::after {
+    transition: none;
+  }
+}
+
+.hero-stat-row {
+  @apply grid grid-cols-3 border-y py-5 sm:py-6;
+  border-color: var(--hero-stat-divider);
+}
+
+@media (max-height: 920px) {
+  .hero-headline {
+    font-size: clamp(2.125rem, 4.5vw, 3.5rem);
+    line-height: 1.06;
+  }
+
+  .hero-stat-row {
+    @apply py-4 sm:py-5;
+  }
+}
+
+/* Header — solid, institutional (opaque so scrolled content cannot bleed through) */
+.header-surface {
+  background: var(--background);
+  box-shadow: 0 1px 0 rgba(var(--shadow-color), 0.06);
+}
+
+.dark .header-surface {
+  background: var(--background);
+  box-shadow: 0 1px 0 rgb(0 0 0 / 0.25);
+}
+
+/* Cards — border-first, subtle lift in light mode */
+.enterprise-card {
+  @apply rounded-lg border border-border bg-card transition-colors duration-200;
+  box-shadow: 0 1px 3px rgb(var(--shadow-color) / 0.04);
+}
+
+.dark .enterprise-card {
+  box-shadow: none;
+}
+
+.enterprise-card:hover {
+  @apply border-saffron/35;
+}
+
+/* Hero — white authority in light, navy gradient in dark */
+.hero-authority {
+  background: var(--hero-bg);
+  color: var(--hero-fg);
+  border-bottom: 1px solid var(--hero-border);
+}
+
+.hero-frame {
+  box-sizing: border-box;
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: calc(var(--header-height) + 1rem);
+  padding-bottom: 1.25rem;
+  @apply px-4 sm:px-6 lg:px-8;
+}
+
+@supports (justify-content: safe center) {
+  .hero-frame {
+    justify-content: safe center;
+  }
+}
+
+.hero-headline {
+  @apply text-[clamp(2.5rem,5.2vw,4.25rem)] font-bold leading-[1.04] tracking-[-0.045em];
+  color: var(--hero-fg);
+}
+
+.hero-lead {
+  @apply text-[15px] leading-[1.55] sm:text-base sm:leading-[1.6];
+  color: var(--hero-muted);
+}
+
+.hero-stat-value {
+  @apply text-[clamp(1.375rem,2.2vw,2rem)] font-semibold tabular-nums leading-none tracking-[-0.03em];
+  color: var(--hero-fg);
+}
+
+.hero-stat-label {
+  @apply mt-1.5 text-xs leading-snug sm:text-sm;
+  color: var(--hero-subtle);
+}
+
+.header-hero-overlay {
+  box-shadow: none;
+}
+
+.header-hero-overlay-light {
+  background: rgb(255 255 255 / 0.85);
+  backdrop-filter: blur(10px);
+}
+
+.dark .header-hero-overlay {
+  background: transparent;
+}
+
+/* Stat row */
+.stat-divider {
+  @apply border-t border-border;
+}
+
+.stat-row {
+  @apply grid grid-cols-2 gap-x-8 gap-y-10 border-y border-border py-10 sm:grid-cols-3 lg:grid-cols-4;
+}
+
+.stat-block {
+  @apply relative;
+}
+
+.stat-value {
+  @apply text-[clamp(1.5rem,2.5vw,2.25rem)] font-semibold tabular-nums leading-none tracking-[-0.03em] text-foreground;
+}
+
+.stat-label {
+  @apply mt-2 text-xs leading-snug text-muted;
+}
+
+/* Scannable layout zones */
+.content-grid-2 {
+  @apply grid gap-8 sm:grid-cols-2;
+}
+
+.content-grid-3 {
+  @apply grid gap-8 sm:grid-cols-2 lg:grid-cols-3;
+}
+
+.content-grid-4 {
+  @apply grid gap-8 sm:grid-cols-2 lg:grid-cols-4;
+}
+
+.zone-panel {
+  @apply rounded-lg border border-border bg-background;
+}
+
+.zone-cell {
+  @apply border-border p-6 sm:p-8;
+}
+
+.divided-rows {
+  @apply divide-y divide-border border-y border-border;
+}
+
+.metric-column {
+  @apply grid shrink-0 grid-cols-3 gap-6 sm:gap-8 lg:min-w-[17rem];
+}
+
+.metric-column .stat-value {
+  @apply text-xl sm:text-2xl;
+}
+
+.quote-card {
+  @apply rounded-lg border border-border bg-background p-8 sm:p-10;
+}
+
+.quote-card-accent {
+  @apply border-l-[3px] border-l-saffron pl-8 sm:pl-10;
+}
+
+.step-badge {
+  @apply inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background text-xs font-semibold tabular-nums text-muted;
+}
+
+/* Delivery discipline — unified panel + timeline */
+.delivery-panel {
+  @apply overflow-hidden rounded-lg border border-border bg-background;
+}
+
+.delivery-panel-band {
+  @apply grid border-b lg:grid-cols-12;
+  background: var(--section-navy-bg);
+  border-color: var(--section-navy-border);
+  color: var(--section-navy-fg);
+}
+
+.delivery-panel-band-cell {
+  @apply px-6 py-3.5 sm:px-8;
+}
+
+.delivery-panel-body {
+  @apply grid lg:grid-cols-12;
+}
+
+.delivery-panel-steps {
+  @apply border-border px-6 py-8 sm:px-8 sm:py-10 lg:col-span-5 lg:border-r;
+}
+
+.delivery-panel-stack {
+  @apply px-6 py-8 sm:px-8 sm:py-10 lg:col-span-7;
+}
+
+.delivery-timeline {
+  @apply relative ml-1 space-y-0 border-l border-border pl-8;
+}
+
+.delivery-timeline-item {
+  @apply relative pb-8 last:pb-0;
+}
+
+.delivery-step-num {
+  @apply absolute -left-[2.125rem] top-0 flex w-7 items-center justify-center bg-background font-serif text-base tabular-nums leading-none text-saffron;
+}
+
+.tech-stack-row {
+  @apply border-b border-border py-5 first:pt-0 last:border-b-0 last:pb-0;
+}
+
+/* Homepage engineering teaser — top-aligned copy + compact stack panel */
+.engineering-teaser-grid {
+  @apply grid gap-8 lg:grid-cols-2 lg:items-start lg:gap-10 xl:gap-12;
+}
+
+.engineering-teaser-copy {
+  @apply min-w-0;
+}
+
+.engineering-teaser-panel-wrap {
+  @apply min-w-0;
+}
+
+.engineering-backbone {
+  @apply grid gap-2 sm:gap-2.5;
+}
+
+.engineering-backbone-item {
+  @apply flex items-start gap-3 rounded-md border border-border/60 bg-soft-gray/25 px-4 py-2.5 text-sm leading-snug text-foreground transition-[border-color,background-color] duration-200 hover:border-saffron/25 hover:bg-soft-gray/45;
+}
+
+.engineering-backbone-icon {
+  @apply mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border/60 bg-background text-saffron;
+}
+
+.engineering-stack-panel {
+  @apply w-full overflow-hidden rounded-lg border border-border bg-background shadow-sm;
+}
+
+.engineering-stack-panel-header {
+  @apply border-b px-5 py-2.5 sm:px-6;
+  background: var(--section-navy-bg);
+  border-color: var(--section-navy-border);
+}
+
+.engineering-stack-panel-body {
+  @apply px-5 py-3.5 sm:px-6 sm:py-4;
+}
+
+.engineering-stack-categories {
+  @apply grid gap-2 sm:gap-2.5;
+}
+
+.engineering-stack-category {
+  @apply rounded-md border border-border/50 bg-soft-gray/20 p-3 transition-[border-color,background-color,transform] duration-200 hover:border-saffron/20 hover:bg-soft-gray/35 sm:p-3.5;
+}
+
+.engineering-stack-category-chips {
+  @apply mt-2 flex flex-wrap gap-1;
+}
+
+.engineering-stack-chip {
+  @apply inline-flex rounded-md border border-border bg-soft-gray/50 px-2 py-0.5 text-xs font-normal text-foreground transition-[border-color,background-color] duration-200 hover:border-foreground/15 hover:bg-background;
+}
+
+.tech-chip {
+  @apply inline-flex rounded-md border border-border bg-soft-gray/50 px-2.5 py-1 text-[13px] font-normal text-foreground transition-[border-color,background-color] duration-200 hover:border-foreground/15 hover:bg-background;
+}
+
+.icon-muted {
+  @apply text-muted/70;
+}
+
+/* Link underline on hover — editorial */
+.link-editorial {
+  @apply font-medium text-foreground underline-offset-4 transition-colors hover:text-saffron hover:underline;
+}
+
+/* Navy block stats */
+.stat-value-light {
+  @apply text-[clamp(2rem,4vw,3rem)] font-bold tabular-nums leading-none tracking-[-0.04em];
+  color: var(--section-navy-fg);
+}
+
+.section-navy-muted {
+  color: var(--section-navy-muted);
+}
+
+.section-navy-border {
+  border-color: var(--section-navy-border);
+}
+
+/* Clients → trust credibility band */
+.clients-band {
+  @apply relative;
+}
+
+.clients-band::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 4.5rem;
+  background: linear-gradient(to bottom, transparent, var(--section-navy-bg));
+  pointer-events: none;
+}
+
+.clients-venture-strip {
+  @apply relative z-[1] grid grid-cols-2 border border-border bg-background/60 sm:grid-cols-4;
+}
+
+.dark .clients-venture-strip {
+  @apply bg-background/40;
+}
+
+.client-venture-cell {
+  @apply flex flex-col items-start px-5 py-7 transition-colors duration-300 hover:bg-background/80 sm:px-6 sm:py-8 lg:px-7 lg:py-9;
+}
+
+.client-venture-cell:not(:first-child) {
+  @apply border-l border-border;
+}
+
+.client-venture-cell:nth-child(n + 3) {
+  @apply border-t border-border sm:border-t-0;
+}
+
+.client-monogram {
+  @apply inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-soft-gray/80 text-[10px] font-semibold tracking-[0.06em] text-muted transition-[border-color,background-color] duration-300;
+}
+
+.client-venture-cell:hover .client-monogram {
+  @apply border-foreground/15 bg-background text-foreground;
+}
+
+.client-venture-name {
+  @apply mt-4 text-[15px] font-semibold leading-snug tracking-[-0.02em] text-foreground;
+}
+
+.client-venture-role {
+  @apply mt-1 text-xs leading-relaxed text-muted;
+}
+
+.trust-stat-row {
+  @apply grid grid-cols-2 border-t pt-10 sm:pt-12 lg:grid-cols-4;
+  border-color: var(--section-navy-border);
+}
+
+.trust-stat-cell {
+  @apply px-4 py-8 sm:px-6 sm:py-0 lg:px-8;
+}
+
+.trust-stat-cell:nth-child(odd):not(:first-child) {
+  @apply border-l;
+  border-color: var(--section-navy-border);
+}
+
+.trust-stat-cell:nth-child(n + 3) {
+  @apply border-t lg:border-t-0;
+  border-color: var(--section-navy-border);
+}
+
+.trust-stat-cell:nth-child(n + 2) {
+  @apply lg:border-l;
+  border-color: var(--section-navy-border);
+}
+
+.trust-stat-label {
+  @apply mt-3 text-[11px] font-semibold uppercase tracking-[0.14em];
+  color: var(--section-navy-muted);
+}
+
+/* Services — editorial divided rows */
+.service-row-index {
+  @apply pt-0.5 font-serif text-sm tabular-nums leading-none text-muted/45 transition-colors duration-300;
+}
+
+.group:hover .service-row-index {
+  @apply text-muted/70;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-row-index {
+    transition: none;
+  }
+}
+
+/* Visual panel — theme-aware right-column anchor */
+.visual-panel {
+  @apply overflow-hidden rounded-lg border border-border bg-background p-6 sm:p-8;
+}
+
+.visual-panel-navy {
+  border-color: var(--section-navy-border);
+  background: rgb(255 255 255 / 0.04);
+}
+
+.dark .visual-panel-navy {
+  background: rgb(255 255 255 / 0.03);
+}
+
+/* Partnership timeline */
+.partnership-timeline {
+  @apply relative ml-1 space-y-0 border-l border-border pl-8;
+}
+
+.partnership-timeline-item {
+  @apply relative pb-8 last:pb-0;
+}
+
+.partnership-step-num {
+  @apply absolute -left-[2.125rem] top-0 flex w-7 items-center justify-center bg-soft-gray font-serif text-base tabular-nums leading-none text-saffron;
+}
+
+/* Featured spotlight & typographic quote */
+.featured-spotlight {
+  @apply relative border border-border bg-background p-6 transition-[border-color,box-shadow] duration-300 sm:p-8 lg:p-10;
+}
+
+.featured-spotlight-frame {
+  @apply p-5 sm:p-6 lg:p-7;
+}
+
+.featured-spotlight-frame .featured-spotlight-rule {
+  @apply mb-4;
+}
+
+.featured-spotlight-frame .featured-spotlight-media {
+  @apply mb-0 aspect-[16/9] max-h-36 sm:max-h-40;
+}
+
+.featured-spotlight-body {
+  @apply flex flex-col gap-4;
+}
+
+.featured-spotlight-metrics-frame {
+  @apply mt-0 w-fit max-w-full grid-cols-2 gap-x-5 gap-y-3 border-t border-border pt-4 sm:grid-cols-4 sm:gap-x-6;
+}
+
+.featured-spotlight-metrics-frame .stat-value {
+  @apply text-lg sm:text-xl;
+}
+
+.featured-spotlight-metrics-frame .stat-label {
+  @apply mt-1 text-[11px];
+}
+
+.featured-spotlight-grid {
+  @apply grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start lg:gap-8;
+}
+
+.featured-spotlight:hover {
+  @apply border-saffron/30;
+  box-shadow: 0 4px 24px -12px rgb(var(--shadow-color) / 0.08);
+}
+
+.featured-spotlight-rule {
+  @apply mb-6 h-0.5 w-12 bg-saffron;
+}
+
+.featured-spotlight-metrics {
+  @apply grid w-fit max-w-full grid-cols-2 gap-x-5 gap-y-4 lg:grid-cols-2 lg:gap-x-4 lg:gap-y-3;
+}
+
+.featured-spotlight:not(.featured-spotlight-frame) .featured-spotlight-metrics .stat-value {
+  @apply text-2xl sm:text-3xl;
+}
+
+.featured-quote {
+  @apply relative border border-border bg-background p-8 sm:p-10 lg:p-12;
+}
+
+.featured-quote-text {
+  @apply text-[clamp(1.25rem,2.5vw,1.75rem)] font-medium leading-[1.45] tracking-[-0.02em] text-foreground;
+}
+
+.featured-quote-footer {
+  @apply mt-8 border-t border-border pt-6;
+}
+
+/* Why TRYN — asymmetric philosophy grid (section 05) */
+.why-tryn-grid {
+  @apply grid gap-4 sm:grid-cols-2 sm:gap-5;
+}
+
+.why-tryn-featured {
+  @apply rounded-lg border border-border border-l-[3px] border-l-saffron bg-background p-6 sm:col-span-2 sm:p-10;
+}
+
+.why-tryn-cell {
+  @apply rounded-lg border border-border bg-background p-6 transition-colors duration-200 hover:bg-soft-gray/40 sm:p-8;
+}
+
+.why-tryn-emphasis {
+  @apply rounded-lg border border-border bg-soft-gray/50 p-6 transition-colors duration-200 hover:bg-soft-gray/70 sm:p-8;
+}
+
+.why-tryn-eyebrow {
+  @apply mb-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-saffron;
+}
+
+/* Legacy pillar grid — kept for any non-homepage reuse */
+.pillar-grid {
+  @apply grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2;
+}
+
+.pillar-cell {
+  @apply bg-background p-6 transition-colors duration-200 hover:bg-soft-gray/50 sm:p-8;
+}
+
+/* Services — 3-column capability grid */
+.services-grid {
+  @apply grid w-full grid-cols-1 items-stretch gap-4 sm:gap-5 lg:grid-cols-3 lg:gap-6;
+}
+
+.services-grid-frame {
+  @apply gap-3 sm:gap-4 lg:gap-5;
+}
+
+.services-grid-frame .services-cell {
+  @apply p-5 sm:p-6;
+}
+
+.services-grid-frame .services-discipline-list {
+  @apply mt-3 space-y-1.5;
+}
+
+.services-grid-frame .services-explore {
+  @apply pt-4;
+}
+
+.services-cell {
+  @apply flex h-full min-h-0 w-full min-w-0 flex-col rounded-lg border border-border bg-background p-6 transition-[border-color,box-shadow] duration-200 hover:border-saffron/30 hover:shadow-[0_2px_12px_rgb(var(--shadow-color)/0.06)] sm:p-8;
+}
+
+.services-discipline-list {
+  @apply mt-5 flex-1 space-y-2;
+}
+
+.services-discipline-list li {
+  @apply text-sm font-medium text-foreground;
+}
+
+.services-explore {
+  @apply mt-auto inline-flex items-center gap-1.5 border-t border-border pt-6 text-sm font-medium text-navy transition-colors duration-200 group-hover:text-saffron;
+}
+
+.services-explore::after {
+  content: "→";
+  @apply transition-transform duration-200 group-hover:translate-x-0.5;
+}
+
+.pillar-index {
+  @apply font-serif text-3xl tabular-nums leading-none text-muted/30;
+}
+
+/* Service category dots */
+.category-dot {
+  @apply inline-block h-1.5 w-1.5 shrink-0 rounded-full;
+}
+
+.category-dot-intelligence {
+  @apply bg-violet-500;
+}
+
+.category-dot-platforms {
+  @apply bg-saffron;
+}
+
+.category-dot-applications {
+  @apply bg-cyan-600;
+}
+
+.category-dot-engineering {
+  @apply bg-emerald-600;
+}
+
+/* TRYN vs Agency comparison */
+.comparison-table {
+  @apply overflow-hidden rounded-lg border border-border;
+}
+
+.comparison-header,
+.comparison-row {
+  @apply grid gap-4 border-b border-border px-5 py-4 last:border-b-0 sm:grid-cols-[7rem_1fr_1fr] sm:px-6 sm:py-5;
+}
+
+.comparison-header {
+  @apply hidden bg-soft-gray/60 sm:grid;
+}
+
+.comparison-col-label {
+  @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-foreground;
+}
+
+.comparison-col-muted {
+  @apply text-muted;
+}
+
+.comparison-dimension {
+  @apply text-[11px] font-semibold uppercase tracking-[0.12em] text-muted sm:pt-0.5;
+}
+
+.comparison-tryn {
+  @apply text-sm leading-relaxed text-foreground;
+}
+
+.comparison-agency {
+  @apply text-sm leading-relaxed text-muted;
+}
+
+/* Sticky scroll CTA */
+.sticky-scroll-cta {
+  @apply fixed inset-x-0 bottom-0 z-[150] border-t border-border bg-background/95 py-3 backdrop-blur-md;
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 -4px 24px -8px rgb(var(--shadow-color) / 0.1);
+}
+
+.dark .sticky-scroll-cta {
+  background: color-mix(in srgb, var(--background) 94%, transparent);
+  border-color: rgb(255 255 255 / 0.08);
+  box-shadow: 0 -8px 32px -12px rgb(0 0 0 / 0.45);
+}
+
+.sticky-scroll-cta-visible {
+  transform: translateY(0);
+}
+
+.sticky-cta-bar {
+  @apply fixed inset-x-0 bottom-0 z-[150] border-t border-border bg-background/95 backdrop-blur-md;
+  box-shadow: 0 -4px 24px -8px rgb(var(--shadow-color) / 0.1);
+}
+
+.dark .sticky-cta-bar {
+  background: color-mix(in srgb, var(--background) 94%, transparent);
+  border-color: rgb(255 255 255 / 0.08);
+  box-shadow: 0 -8px 32px -12px rgb(0 0 0 / 0.45);
+}
+
+.sticky-cta-inner {
+  @apply mx-auto flex w-full max-w-6xl flex-col items-stretch justify-between gap-3 px-4 py-3 sm:flex-row sm:items-center sm:px-6 lg:px-8;
+}
+
+.sticky-cta-label {
+  @apply text-sm font-medium text-foreground;
+}
+
+.sticky-cta-actions {
+  @apply flex items-center justify-end gap-2 sm:gap-3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticky-scroll-cta {
+    transition: none;
+  }
+}
+
+/* Page hero band */
+.page-hero {
+  @apply border-b border-border;
+}
+
+/* Form trust panel */
+.form-trust-panel {
+  @apply space-y-6 rounded-lg border border-border bg-soft-gray/50 p-6 sm:p-8;
+}
+
+.form-success-panel {
+  @apply rounded-lg border border-saffron/30 bg-saffron/5 p-8 text-center;
+}
+
+.form-pending-panel {
+  @apply rounded-lg border border-amber-500/30 bg-amber-500/5 p-8 text-center;
+}
+
+/* Section chapter label */
+.section-chapter {
+  @apply mb-3 font-serif text-sm tabular-nums tracking-wide text-muted/45;
+}
+
+/* Editorial section surface — subtle warmth vs flat muted alternation */
+.section-editorial {
+  background: linear-gradient(
+    180deg,
+    var(--background) 0%,
+    color-mix(in srgb, var(--soft-gray) 35%, var(--background)) 100%
+  );
+}
+
+.dark .section-editorial {
+  background: linear-gradient(
+    180deg,
+    var(--background) 0%,
+    color-mix(in srgb, var(--soft-gray) 50%, var(--background)) 100%
+  );
+}
+
+/* Studio manifesto pull quote */
+.studio-manifesto {
+  @apply max-w-lg;
+}
+
+/* Partnership paths — equal peer cards (homepage section 02) */
+.partnership-paths-grid {
+  @apply grid gap-6 lg:grid-cols-2 lg:gap-8 lg:items-stretch;
+}
+
+.partnership-path-card {
+  @apply flex h-full flex-col rounded-lg border border-border bg-background p-6 sm:p-8 lg:p-9;
+}
+
+.partnership-path-card-frame {
+  @apply p-5 sm:p-6 lg:p-7;
+}
+
+.partnership-path-card-interactive {
+  @apply transition-[border-color,box-shadow] duration-300;
+}
+
+.partnership-path-card-interactive:hover {
+  @apply border-saffron/30;
+  box-shadow: 0 4px 24px -12px rgb(var(--shadow-color) / 0.08);
+}
+
+.partnership-path-eyebrow {
+  @apply text-[11px] font-semibold uppercase tracking-[0.16em] text-saffron;
+}
+
+.partnership-path-highlights {
+  @apply flex flex-wrap gap-x-6 gap-y-2.5 border-y border-border py-5;
+}
+
+.partnership-path-highlights-frame {
+  @apply mt-4 gap-x-5 gap-y-2 py-3.5;
+}
+
+.partnership-steps-compact {
+  @apply grid grid-cols-4 gap-3 border-t border-border pt-6 sm:gap-4;
+}
+
+.partnership-steps-compact-frame {
+  @apply gap-2 pt-4 sm:gap-3;
+}
+
+.credibility-ledger-frame .credibility-ledger-cell {
+  @apply p-5 sm:p-6;
+}
+
+.partnership-step-compact-item {
+  @apply min-w-0 text-center sm:text-left;
+}
+
+.partnership-step-compact-num {
+  @apply inline-block font-serif text-sm tabular-nums leading-none text-saffron;
+}
+
+.partnership-step-compact-detail {
+  @apply hidden sm:block;
+}
+
+.not-found-page {
+  @apply flex min-h-[70vh] flex-col items-center justify-center px-4 py-14 text-center sm:px-6 lg:px-8 lg:py-20;
+}
+
+/* Homepage credibility bridge */
+.credibility-band {
+  @apply relative;
+}
+
+.credibility-ledger-cell:focus-visible {
+  @apply outline-none ring-2 ring-saffron/50 ring-offset-2 ring-offset-[var(--section-navy-bg)];
+}
+
+/* Founders flagship section */
+.founders-flagship {
+  @apply relative;
+}
+
+/* Footer */
+.footer-inset {
+  background: color-mix(in srgb, var(--section-navy-bg) 92%, black);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.04);
+  border-top: 1px solid var(--section-navy-border);
+  position: relative;
+}
+
+.footer-inset::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: min(100%, 12rem);
+  height: 1px;
+  background: linear-gradient(90deg, var(--saffron) 0%, rgb(255 140 26 / 0) 100%);
+  pointer-events: none;
+}
+
+.footer-bottom-bar {
+  border-color: var(--section-navy-border);
+}
+
+.footer-newsletter {
+  @apply w-full min-w-0;
+}
+
+.footer-newsletter-form {
+  @apply flex w-full flex-col gap-2.5;
+}
+
+.footer-newsletter-input {
+  @apply h-10 w-full min-w-0 flex-1 rounded-md border text-sm shadow-none;
+  border-color: var(--section-navy-border);
+  background: rgb(255 255 255 / 0.06);
+  color: var(--section-navy-fg);
+}
+
+.footer-newsletter-button {
+  @apply w-full shrink-0;
+}
+
+.footer-newsletter-input::placeholder {
+  color: var(--section-navy-muted);
+}
+
+.footer-newsletter-input:focus-visible {
+  @apply outline-none ring-2 ring-saffron/40 ring-offset-0;
+  border-color: rgb(255 140 26 / 0.45);
+  background: rgb(255 255 255 / 0.08);
+}
+
+.footer-social-link {
+  @apply inline-flex h-9 w-9 items-center justify-center rounded-md border transition-colors duration-200;
+  border-color: var(--section-navy-border);
+  color: var(--section-navy-muted);
+}
+
+.footer-social-link:hover {
+  @apply border-saffron/40 text-saffron;
+  background: rgb(255 255 255 / 0.06);
+}
+
+/* Trust microcopy — adjacent to CTAs */
+.trust-microcopy {
+  @apply text-xs leading-relaxed opacity-75;
+}
+
+/* Client delivery cards — work index */
+.delivery-card-grid {
+  @apply grid gap-5 sm:grid-cols-2;
+}
+
+.delivery-card {
+  @apply relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-background transition-all duration-200 hover:border-saffron/35 hover:shadow-sm;
+}
+
+.delivery-card-accent {
+  @apply h-1 w-full bg-gradient-to-r from-saffron/80 to-saffron/30;
+}
+
+.delivery-card-body {
+  @apply flex flex-1 flex-col p-6 sm:p-7;
+}
+
+/* Case study compact grid */
+.case-study-compact-grid {
+  @apply grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-3;
+}
+
+.case-study-compact {
+  @apply bg-background p-6 transition-colors duration-200 hover:bg-soft-gray/50 sm:p-7;
+}
+
+/* Engagement models — services page */
+.engagement-model-grid {
+  @apply grid gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2 lg:grid-cols-4;
+}
+
+.engagement-model-card {
+  @apply flex h-full flex-col bg-background p-6 transition-colors duration-200 hover:bg-soft-gray/50 sm:p-7;
+}
+
+.logo-image {
+  background: transparent !important;
+}
+
+/* Shiki code snippet panel */
+.code-snippet-html pre {
+  margin: 0;
+  background: transparent !important;
+}
+
+.code-snippet-html code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
