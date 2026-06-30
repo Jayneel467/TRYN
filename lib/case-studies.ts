@@ -44,7 +44,7 @@ const itineroCaseStudies: CaseStudy[] = [
       "TRYN Studios is the dedicated engineering team building Itinero Travels, an AI-powered travel platform currently in pre-launch.",
     metrics: [
       { label: "Status", value: "Pre-launch" },
-      { label: "Launch", value: "Jun 2026" },
+      { label: "Launch", value: "Aug 21, 2026" },
       { label: "Focus", value: "AI planning" },
       { label: "Site", value: "itinero.company" },
     ],

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/layout/logo";
 import { FooterNewsletter } from "@/components/layout/footer-newsletter";
-import { FooterSocial } from "@/components/layout/footer-social";
 import { footerLinkGroups, siteConfig } from "@/lib/site-config";
 
 function FooterLink({ href, label }: { href: string; label: string }) {
@@ -63,7 +62,6 @@ export function Footer() {
                 {siteConfig.contact.phoneNote}
               </p>
             </div>
-            <FooterSocial className="pt-0.5" />
           </div>
 
           <nav

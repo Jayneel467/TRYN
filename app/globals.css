@@ -521,6 +521,31 @@ body {
   border-color: var(--section-navy-border);
 }
 
+/* Hospitality trust band — slim credibility strip below hero */
+.hospitality-trust-band {
+  @apply border-t border-border;
+}
+
+.hospitality-group-strip {
+  @apply flex flex-wrap items-center justify-center gap-2.5 sm:gap-3;
+}
+
+.hospitality-group-pill {
+  @apply inline-flex items-center gap-2.5 rounded-full border border-border bg-background/80 px-3.5 py-2 transition-colors duration-300 hover:border-foreground/15 hover:bg-background;
+}
+
+.dark .hospitality-group-pill {
+  @apply bg-background/50 hover:bg-background/70;
+}
+
+.hospitality-group-monogram {
+  @apply inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-md border border-border bg-soft-gray/80 text-[9px] font-semibold tracking-[0.06em] text-muted;
+}
+
+.hospitality-group-pill:hover .hospitality-group-monogram {
+  @apply border-foreground/15 bg-background text-foreground;
+}
+
 /* Clients → trust credibility band */
 .clients-band {
   @apply relative;
@@ -1058,17 +1083,6 @@ body {
   @apply outline-none ring-2 ring-saffron/40 ring-offset-0;
   border-color: rgb(255 140 26 / 0.45);
   background: rgb(255 255 255 / 0.08);
-}
-
-.footer-social-link {
-  @apply inline-flex h-9 w-9 items-center justify-center rounded-md border transition-colors duration-200;
-  border-color: var(--section-navy-border);
-  color: var(--section-navy-muted);
-}
-
-.footer-social-link:hover {
-  @apply border-saffron/40 text-saffron;
-  background: rgb(255 255 255 / 0.06);
 }
 
 /* Trust microcopy — adjacent to CTAs */

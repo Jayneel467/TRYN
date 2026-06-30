@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { HeroSection } from "@/components/sections/hero-section";
+import { HospitalityTrustBand } from "@/components/sections/hospitality-trust-band";
 import { CredibilityBand } from "@/components/sections/credibility-band";
 import { FoundersProgramSection } from "@/components/sections/founders-program-section";
 import { ServicesSection } from "@/components/sections/services-section";
@@ -40,6 +41,7 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <HeroSection />
+      <HospitalityTrustBand />
       <CredibilityBand />
       <FoundersProgramSection />
       <ServicesSection />

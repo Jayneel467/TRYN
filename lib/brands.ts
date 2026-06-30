@@ -13,7 +13,7 @@ export const portfolioBrands = [
     featured: true,
     metrics: [
       { label: "Status", value: "Pre-launch" },
-      { label: "Launch", value: "Jun 2026" },
+      { label: "Launch", value: "Aug 21, 2026" },
       { label: "Site", value: "itinero.company" },
     ],
     accent: "#0E7490",
