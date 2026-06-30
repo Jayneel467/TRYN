@@ -58,7 +58,7 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-[200] isolate overflow-hidden border-b",
+        "fixed inset-x-0 top-0 z-[200] isolate border-b",
         heroOverlay
           ? cn(
               "header-hero-overlay",

@@ -40,6 +40,8 @@ export function ServicesNavDropdown({ heroDarkOverlay }: { heroDarkOverlay?: boo
   const isActive = pathname === "/services" || pathname.startsWith("/services/");
 
   useEffect(() => {
+    if (!open) return;
+
     const onPointerDown = (e: PointerEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(false);
@@ -47,7 +49,7 @@ export function ServicesNavDropdown({ heroDarkOverlay }: { heroDarkOverlay?: boo
     };
     document.addEventListener("pointerdown", onPointerDown);
     return () => document.removeEventListener("pointerdown", onPointerDown);
-  }, []);
+  }, [open]);
 
   useEffect(() => {
     setOpen(false);
