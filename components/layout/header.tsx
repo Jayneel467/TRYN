@@ -69,10 +69,13 @@ export function Header() {
           : "header-surface border-border",
       )}
     >
-      <div className="container-wide site-gutter flex h-16 items-center justify-between gap-6">
+      <div className="container-wide site-gutter flex h-16 items-center justify-between gap-6 overflow-visible">
         <Logo variant="nav" priority colorScheme={logoColorScheme} className="min-w-0" />
 
-        <nav className="hidden min-w-0 flex-1 items-center justify-center lg:flex" aria-label="Main navigation">
+        <nav
+          className="hidden min-w-0 flex-1 items-center justify-center overflow-visible lg:flex"
+          aria-label="Main navigation"
+        >
           <ul className="flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
