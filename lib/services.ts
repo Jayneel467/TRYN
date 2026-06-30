@@ -1,13 +1,25 @@
-export type Service = {
-  slug: string;
-  title: string;
-  description: string;
-  icon: string;
-  capabilities: string[];
-  audience: string[];
-  approach: { title: string; description: string }[];
-  technologies: string[];
-};
+export type { Service } from "@/lib/service-types";
+import type { Service } from "@/lib/service-types";
+import {
+  marketingCategoryBySlug,
+  marketingCategoryDotClass,
+  marketingServices,
+  type MarketingCategory,
+} from "@/lib/marketing-services";
+
+export type { MarketingCategory };
+export {
+  getServicesByMarketingCategory,
+  growthBrandHomepageCategories,
+  growthBrandOverview,
+  marketingCategoryDotClass,
+  marketingCategoryHooks,
+  marketingCategoryHref,
+  marketingCategoryOrder,
+  marketingCategorySlug,
+  getMarketingCategory,
+  getMarketingCategoryFromSlug,
+} from "@/lib/marketing-services";
 
 export const services: Service[] = [
   {
@@ -415,6 +427,7 @@ export const services: Service[] = [
     ],
     technologies: ["Strategy", "Architecture", "Due Diligence", "Roadmapping", "CTO Advisory"],
   },
+  ...marketingServices,
 ];
 
 export const homepageServiceSlugs = [
@@ -428,7 +441,16 @@ export const homepageServiceSlugs = [
 
 export type HomepageServiceSlug = (typeof homepageServiceSlugs)[number];
 
-export type ServiceCategory = "Intelligence" | "Platforms" | "Applications" | "Engineering";
+export type EngineeringCategory = "Intelligence" | "Platforms" | "Applications" | "Engineering";
+
+export type ServiceCategory = EngineeringCategory | MarketingCategory;
+
+export const engineeringCategoryOrder: EngineeringCategory[] = [
+  "Intelligence",
+  "Platforms",
+  "Applications",
+  "Engineering",
+];
 
 export const serviceCategoryBySlug: Record<string, ServiceCategory> = {
   "ai-products": "Intelligence",
@@ -451,6 +473,7 @@ export const serviceCategoryBySlug: Record<string, ServiceCategory> = {
   "system-architecture": "Engineering",
   "technical-consulting": "Engineering",
   "manpower-development": "Engineering",
+  ...marketingCategoryBySlug,
 };
 
 export const serviceCategoryDotClass: Record<ServiceCategory, string> = {
@@ -458,7 +481,24 @@ export const serviceCategoryDotClass: Record<ServiceCategory, string> = {
   Platforms: "category-dot-platforms",
   Applications: "category-dot-applications",
   Engineering: "category-dot-engineering",
+  ...marketingCategoryDotClass,
 };
+
+export function isMarketingCategory(category: ServiceCategory): category is MarketingCategory {
+  return category in marketingCategoryDotClass;
+}
+
+export function getRelatedServices(service: Service, limit = 3): Service[] {
+  const category = getServiceCategory(service.slug);
+  const sameCategory = services.filter(
+    (s) => s.slug !== service.slug && getServiceCategory(s.slug) === category,
+  );
+  if (sameCategory.length >= limit) return sameCategory.slice(0, limit);
+  const rest = services.filter(
+    (s) => s.slug !== service.slug && getServiceCategory(s.slug) !== category,
+  );
+  return [...sameCategory, ...rest].slice(0, limit);
+}
 
 export function getServiceCategory(slug: string): ServiceCategory {
   return serviceCategoryBySlug[slug] ?? "Applications";
@@ -484,7 +524,7 @@ export function getServiceBySlug(slug: string): Service | undefined {
   return services.find((s) => s.slug === slug);
 }
 
-export type HomepageCategory = Exclude<ServiceCategory, "Engineering">;
+export type HomepageCategory = "Intelligence" | "Platforms" | "Applications";
 
 export const homepageServiceCategoryHref: Record<HomepageCategory, string> = {
   Intelligence: "/services/ai-products",

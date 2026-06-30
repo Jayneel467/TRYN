@@ -7,6 +7,7 @@ import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { Logo } from "@/components/layout/logo";
 import { MobileNav } from "@/components/layout/mobile-nav";
+import { ServicesNavDropdown } from "@/components/layout/services-nav-dropdown";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { navLinks, siteConfig } from "@/lib/site-config";
@@ -75,6 +76,9 @@ export function Header() {
           <ul className="flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive = pathname === link.href || pathname.startsWith(`${link.href}/`);
+              if (link.href === "/services") {
+                return <ServicesNavDropdown key={link.href} heroDarkOverlay={heroDarkOverlay} />;
+              }
               return (
                 <li key={link.href}>
                   <Link

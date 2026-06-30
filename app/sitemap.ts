@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { caseStudies } from "@/lib/case-studies";
 import { insightPosts } from "@/lib/insights";
+import { marketingCategoryHref } from "@/lib/marketing-services";
 import { services } from "@/lib/services";
 import { solutions } from "@/lib/solutions";
 import { siteConfig } from "@/lib/site-config";
@@ -11,6 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
     "",
     "/services",
+    "/services/growth-brand",
+    ...Object.values(marketingCategoryHref),
     "/work",
     "/testimonials",
     "/founders-program",

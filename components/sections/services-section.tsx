@@ -3,6 +3,7 @@ import { FadeIn } from "@/components/shared/fade-in";
 import { SectionHeading } from "@/components/shared/section-heading";
 import { Stagger, StaggerItem } from "@/components/shared/stagger";
 import {
+  growthBrandHomepageCategories,
   homepageServiceCategories,
   serviceCategoryDotClass,
 } from "@/lib/services";
@@ -30,7 +31,7 @@ export function ServicesSection() {
         </FadeIn>
 
         <Stagger className="services-grid services-grid-frame mt-8 lg:mt-9" stagger={0.08}>
-          {homepageServiceCategories.map((band) => (
+          {[...homepageServiceCategories, ...growthBrandHomepageCategories].map((band) => (
             <StaggerItem key={band.category} className="h-full min-w-0">
               <Link href={band.href} className="services-cell group">
                 <h3 className="flex items-center gap-2 font-semibold tracking-[-0.01em] text-foreground transition-colors duration-200 group-hover:text-saffron">

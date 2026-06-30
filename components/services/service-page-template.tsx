@@ -6,17 +6,27 @@ import { InteractiveRowLink } from "@/components/shared/interactive-row-link";
 import { PageHero } from "@/components/shared/page-hero";
 import { Stagger, StaggerItem } from "@/components/shared/stagger";
 import { Button } from "@/components/ui/button";
-import { services, type Service } from "@/lib/services";
+import {
+  getRelatedServices,
+  getServiceCategory,
+  isMarketingCategory,
+  serviceCategoryDotClass,
+  type Service,
+} from "@/lib/services";
 import { siteConfig } from "@/lib/site-config";
+import { cn } from "@/lib/utils";
 
 type Props = {
   service: Service;
 };
 
 export function ServicePageTemplate({ service }: Props) {
-  const relatedServices = services
-    .filter((s) => s.slug !== service.slug)
-    .slice(0, 3);
+  const relatedServices = getRelatedServices(service);
+  const category = getServiceCategory(service.slug);
+  const isMarketing = isMarketingCategory(category);
+  const toolsLabel = isMarketing ? "Tools & platforms" : "Technologies";
+  const deliverablesLabel = isMarketing ? "What we deliver" : "What we build";
+  const heroLead = service.intro ?? service.description;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -38,25 +48,49 @@ export function ServicePageTemplate({ service }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <PageHero eyebrow="Service" title={service.title} lead={service.description}>
-        <nav aria-label="Breadcrumb" className="mt-6 flex items-center gap-2 text-sm text-muted">
+      <PageHero eyebrow="Service" title={service.title} lead={heroLead}>
+        <nav aria-label="Breadcrumb" className="mt-6 flex flex-wrap items-center gap-2 text-sm text-muted">
           <Link href="/" className="hover:text-saffron">
             Home
           </Link>
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-4 w-4 shrink-0" aria-hidden="true" />
           <Link href="/services" className="hover:text-saffron">
             Services
           </Link>
-          <ChevronRight className="h-4 w-4" />
+          {isMarketing ? (
+            <>
+              <ChevronRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+              <Link href="/services/growth-brand" className="hover:text-saffron">
+                Growth & Brand
+              </Link>
+            </>
+          ) : null}
+          <ChevronRight className="h-4 w-4 shrink-0" aria-hidden="true" />
           <span className="text-foreground">{service.title}</span>
         </nav>
+        <p className="mt-4 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">
+          <span
+            className={cn("category-dot", serviceCategoryDotClass[category])}
+            aria-hidden="true"
+          />
+          {category}
+        </p>
       </PageHero>
 
       <section className="section-padding section-muted">
         <div className="container-wide">
+          {service.studioAngle ? (
+            <FadeIn className="mb-12 max-w-3xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-saffron">
+                Studio angle
+              </p>
+              <p className="mt-3 text-muted leading-relaxed">{service.studioAngle}</p>
+            </FadeIn>
+          ) : null}
+
           <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] lg:gap-16">
             <FadeIn>
-              <h2 className="section-title text-foreground">What we build</h2>
+              <h2 className="section-title text-foreground">{deliverablesLabel}</h2>
               <ul className="mt-8 space-y-3">
                 {service.capabilities.map((cap) => (
                   <li key={cap} className="flex gap-3 body-copy">
@@ -78,6 +112,20 @@ export function ServicePageTemplate({ service }: Props) {
                   </li>
                 ))}
               </ol>
+
+              {service.outcomes && service.outcomes.length > 0 ? (
+                <>
+                  <h2 className="section-title mt-12 text-foreground">Expected outcomes</h2>
+                  <ul className="mt-8 space-y-3">
+                    {service.outcomes.map((outcome) => (
+                      <li key={outcome} className="flex gap-3 body-copy">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-saffron" />
+                        {outcome}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : null}
             </FadeIn>
 
             <FadeIn delay={0.08}>
@@ -94,7 +142,7 @@ export function ServicePageTemplate({ service }: Props) {
                   ))}
                 </ul>
                 <h2 className="mt-8 text-[11px] font-semibold uppercase tracking-[0.16em] text-muted">
-                  Technologies
+                  {toolsLabel}
                 </h2>
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   {service.technologies.map((tech) => (
