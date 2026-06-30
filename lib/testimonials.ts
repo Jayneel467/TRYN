@@ -10,6 +10,8 @@ export type Testimonial = {
   featured: boolean;
   industry: string;
   accent: string;
+  /** Links testimonial to a /work case study when set */
+  caseStudySlug?: string;
 };
 
 export const testimonials: Testimonial[] = [
@@ -26,6 +28,21 @@ export const testimonials: Testimonial[] = [
     featured: true,
     industry: "Travel & Hospitality",
     accent: "#0E7490",
+  },
+  {
+    id: "wyndham-long-island",
+    quote:
+      "TRYN Studios built an AI system that helped us capture more direct bookings and stay in closer contact with guests before they arrive. We rely less on OTAs for discovery, and our team spends less time on repetitive inquiries. The result is a stronger direct revenue channel and smoother guest communication.",
+    author: "Dhananjay Patel",
+    role: "Owner",
+    company: "Wyndham Long Island",
+    legalName: "Wyndham Long Island, USA",
+    initials: "DP",
+    rating: 5,
+    featured: false,
+    industry: "Hospitality",
+    accent: "#1E3A5F",
+    caseStudySlug: "wyndham-long-island-ai",
   },
   {
     id: "vibrant-campus",

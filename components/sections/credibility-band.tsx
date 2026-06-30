@@ -17,7 +17,7 @@ const proofLinks = [
   {
     label: "Client deliveries",
     title: `${deliveryCount}+ shipped`,
-    detail: "Chatbots, generative AI, and analytics across healthcare, edtech, and more.",
+    detail: "Chatbots, generative AI, and analytics across healthcare, hospitality, edtech, and more.",
     href: "/work#client-deliveries",
     link: "View client work",
   },

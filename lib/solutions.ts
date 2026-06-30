@@ -22,6 +22,8 @@ const categoryDescriptions: Record<string, string> = {
   "Voice AI": "Voice-enabled knowledge systems for hands-free enterprise retrieval.",
   "Fashion AI": "Guided experiences for traditional retail and fashion education.",
   Sales: "WhatsApp sales assistants that qualify leads and automate order flows.",
+  Hospitality:
+    "AI guest engagement and direct booking systems that reduce OTA dependency and scale pre-arrival communication.",
   "3D Technology":
     "Conversational layers on 3D product experiences for guided discovery and conversion.",
 };

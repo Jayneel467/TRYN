@@ -89,6 +89,16 @@ export default function TestimonialsPage() {
                         <p className="mt-1 text-sm text-muted">
                           {t.role}, {t.company}
                         </p>
+                        {t.caseStudySlug && (
+                          <p className="mt-2">
+                            <Link
+                              href={`/work/${t.caseStudySlug}`}
+                              className="text-sm font-medium text-saffron hover:text-saffron-hover"
+                            >
+                              Read the build story
+                            </Link>
+                          </p>
+                        )}
                         <p className="mt-2 text-xs text-muted">Engineered by TRYN Studios</p>
                       </footer>
                     </blockquote>

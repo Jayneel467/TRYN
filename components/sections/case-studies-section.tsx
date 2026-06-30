@@ -75,7 +75,7 @@ export function CaseStudiesSection() {
         <FadeIn className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between" delay={0.1}>
           <p className="max-w-2xl text-sm leading-relaxed text-muted">
             TRYN Studios has shipped chatbots, generative AI, and analytics across healthcare,
-            edtech, manufacturing, and more,{" "}
+            hospitality, edtech, manufacturing, and more,{" "}
             <Link href="/work#client-deliveries" className="link-editorial">
               view all {clientDeliveries.length} client deliveries
             </Link>

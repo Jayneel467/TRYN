@@ -74,7 +74,7 @@ export default function WorkPage() {
               <SectionHeading
                 eyebrow="Client work"
                 title="Shipped by TRYN Studios"
-                subtitle={`${clientDeliveries.length} production AI systems across healthcare, education, manufacturing, and more.`}
+                subtitle={`${clientDeliveries.length} production AI systems across healthcare, hospitality, education, manufacturing, and more.`}
                 className="mb-8 max-w-3xl"
               />
             </FadeIn>
