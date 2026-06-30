@@ -79,8 +79,8 @@ export function ContactForm() {
           Delivery not configured yet
         </h3>
         <p className="mt-2 text-muted">
-          We saved your details locally, but outbound email is not configured on this
-          environment. Please email us directly at{" "}
+          We received your message, but outbound email is not configured on this
+          environment yet. Please email us directly at{" "}
           <a
             href={`mailto:${siteConfig.contact.email}`}
             className="font-medium text-saffron hover:text-saffron-hover"
