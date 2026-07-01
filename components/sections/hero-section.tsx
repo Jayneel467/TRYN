@@ -16,6 +16,8 @@ export function HeroSection() {
             aria-hidden="true"
           />
 
+          <p className="section-eyebrow text-center">TRYN Studios</p>
+
           <h1 className="hero-headline">{siteConfig.tagline}</h1>
 
           <p className="hero-lead mx-auto mt-3 max-w-xl">{siteConfig.description}</p>
@@ -41,6 +43,18 @@ export function HeroSection() {
               </Button>
             </MotionPressable>
           </div>
+
+          <p className="mx-auto mt-5 max-w-lg text-center text-sm text-muted">
+            <Link href="/services" className="link-editorial">
+              Explore services
+            </Link>
+            <span className="text-border" aria-hidden="true">
+              {" · "}
+            </span>
+            <Link href="/work" className="link-editorial">
+              See our work
+            </Link>
+          </p>
         </HeroEntrance>
 
         <HeroEntrance delay={0.08} className="mt-6 sm:mt-7">

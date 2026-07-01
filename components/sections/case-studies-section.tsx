@@ -42,6 +42,7 @@ export function CaseStudiesSection() {
           status={featuredCaseStudy.status}
           externalUrl={featuredCaseStudy.externalUrl}
           image={featuredCaseStudy.image}
+          imageAlt={`${featuredCaseStudy.title} flagship build by TRYN Studios`}
           badge="Flagship build"
           className="mt-8 lg:mt-9"
         />

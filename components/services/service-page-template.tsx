@@ -13,6 +13,10 @@ import {
   serviceCategoryDotClass,
   type Service,
 } from "@/lib/services";
+import {
+  createBreadcrumbJsonLd,
+  createServiceJsonLd,
+} from "@/lib/metadata";
 import { siteConfig } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
@@ -28,18 +32,23 @@ export function ServicePageTemplate({ service }: Props) {
   const deliverablesLabel = isMarketing ? "What we deliver" : "What we build";
   const heroLead = service.intro ?? service.description;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: service.title,
-    description: service.description,
-    provider: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteConfig.url,
-    },
-    areaServed: "Worldwide",
-  };
+  const breadcrumbItems = [
+    { name: "Home", path: "/" },
+    { name: "Services", path: "/services" },
+    ...(isMarketing
+      ? [{ name: "Growth & Brand", path: "/services/growth-brand" }]
+      : []),
+    { name: service.title, path: `/services/${service.slug}` },
+  ];
+
+  const jsonLd = [
+    createServiceJsonLd({
+      title: service.title,
+      description: service.description,
+      url: `${siteConfig.url}/services/${service.slug}`,
+    }),
+    createBreadcrumbJsonLd(breadcrumbItems),
+  ];
 
   return (
     <>

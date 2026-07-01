@@ -6,7 +6,7 @@ import { InteractiveRowLink } from "@/components/shared/interactive-row-link";
 import { PageHero } from "@/components/shared/page-hero";
 import { Button } from "@/components/ui/button";
 import { getCaseStudyBySlug } from "@/lib/case-studies";
-import { createPageMetadata } from "@/lib/metadata";
+import { createBreadcrumbJsonLd, createPageMetadata, createServiceJsonLd } from "@/lib/metadata";
 import { getSolutionBySlug, solutions } from "@/lib/solutions";
 import { siteConfig } from "@/lib/site-config";
 
@@ -36,15 +36,18 @@ export default async function SolutionPage({ params }: Props) {
     .map((s) => getCaseStudyBySlug(s))
     .filter(Boolean);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
-    name: solution.title,
-    description: solution.description,
-    provider: { "@type": "Organization", name: siteConfig.name },
-    areaServed: "Worldwide",
-    url: `${siteConfig.url}/solutions/${slug}`,
-  };
+  const jsonLd = [
+    createServiceJsonLd({
+      title: solution.title,
+      description: solution.description,
+      url: `${siteConfig.url}/solutions/${slug}`,
+    }),
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Solutions", path: "/solutions" },
+      { name: solution.title, path: `/solutions/${slug}` },
+    ]),
+  ];
 
   return (
     <>

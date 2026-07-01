@@ -26,7 +26,7 @@ import { cn } from "@/lib/utils";
 export const metadata: Metadata = createPageMetadata({
   title: "Services",
   description:
-    "Product engineering and growth marketing from one venture studio partner: AI, SaaS, brand, SEO, paid media, and dedicated teams.",
+    "Product engineering and growth marketing from TRYN Studios: AI development, SaaS platforms, dedicated engineering teams, brand, SEO, and paid media.",
   path: "/services",
 });
 
@@ -134,7 +134,7 @@ export default function ServicesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Capabilities"
+        eyebrow="TRYN Studios · Services"
         title="Build the product. Drive the growth."
         lead="TRYN is a venture studio that engineers products and runs the marketing, brand, and revenue work ventures need to win in market."
       />

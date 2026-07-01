@@ -30,26 +30,31 @@ const ttHoves = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} | ${siteConfig.tagline}`,
-    template: `%s | ${siteConfig.name}`,
+    default: `${siteConfig.name} | Product Engineering Studio & Venture Partner`,
+    template: `${siteConfig.name} | %s`,
   },
   description: siteConfig.description,
+  alternates: {
+    canonical: siteConfig.url,
+  },
   keywords: [
     "TRYN Studios",
-    "product engineering",
+    "product engineering studio",
+    "AI development studio",
     "venture studio",
-    "startup engineering",
+    "founders program",
+    "hire engineering team",
     "dedicated engineering team",
     "AI products",
     "SaaS development",
-    "MVP development",
+    "startup engineering",
   ],
   openGraph: {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
     siteName: siteConfig.name,
-    title: `${siteConfig.name} | ${siteConfig.tagline}`,
+    title: `${siteConfig.name} | Product Engineering Studio & Venture Partner`,
     description: siteConfig.description,
     images: [
       {
@@ -62,7 +67,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} | ${siteConfig.tagline}`,
+    title: `${siteConfig.name} | Product Engineering Studio & Venture Partner`,
     description: siteConfig.description,
     images: ["/og-image.svg"],
   },

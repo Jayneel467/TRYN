@@ -18,7 +18,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = createPageMetadata({
   title: "Our Work",
   description:
-    "TRYN Studios is building Itinero Travels in pre-launch, with 10+ client AI deliveries and selected founder partnerships.",
+    "Case studies from TRYN Studios: AI products, SaaS platforms, and hospitality systems shipped for clients, plus the Itinero flagship build in development.",
   path: "/work",
 });
 
@@ -28,7 +28,7 @@ export default function WorkPage() {
   return (
     <>
       <PageHero
-        eyebrow="Work"
+        eyebrow="TRYN Studios · Work"
         title="What we're building"
         lead="TRYN Studios engineers the Itinero flagship in pre-launch, founded by Jagannath, ships AI products for clients across industries, and partners with selected founders through the Founders Program."
       />

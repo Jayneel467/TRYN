@@ -33,10 +33,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const insightPages = insightPosts.map((p) => `/insights/${p.slug}`);
   const solutionPages = solutions.map((s) => `/solutions/${s.slug}`);
 
-  return [...staticPages, ...servicePages, ...caseStudyPages, ...insightPages, ...solutionPages].map((path) => ({
-    url: `${baseUrl}${path}`,
-    lastModified: new Date(),
-    changeFrequency: path === "" ? "weekly" : "monthly",
-    priority: path === "" ? 1 : path.startsWith("/work/") ? 0.7 : 0.8,
-  }));
+  return [...staticPages, ...servicePages, ...caseStudyPages, ...insightPages, ...solutionPages].map(
+    (path) => ({
+      url: `${baseUrl}${path}`,
+      lastModified: new Date(),
+      changeFrequency: path === "" ? "weekly" : "monthly",
+      priority: getSitemapPriority(path),
+    }),
+  );
+}
+
+function getSitemapPriority(path: string): number {
+  if (path === "") return 1;
+  if (
+    path === "/services" ||
+    path === "/founders-program" ||
+    path === "/contact" ||
+    path === "/work"
+  ) {
+    return 0.9;
+  }
+  if (path.startsWith("/services/") || path.startsWith("/work/")) return 0.8;
+  if (path.startsWith("/insights/") || path.startsWith("/solutions/")) return 0.7;
+  return 0.6;
 }

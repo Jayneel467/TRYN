@@ -12,7 +12,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = createPageMetadata({
   title: "Engineering",
   description:
-    "Technology agnostic product engineering. We choose the right stack based on your business goals.",
+    "Product engineering from TRYN Studios: AI, cloud infrastructure, DevOps, and full-stack delivery for ventures and growth-stage companies.",
   path: "/engineering",
 });
 

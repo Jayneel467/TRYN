@@ -10,7 +10,7 @@ import { testimonialStats } from "@/lib/testimonials";
 export const metadata: Metadata = createPageMetadata({
   title: "Contact",
   description:
-    "Contact TRYN Studios to hire a dedicated product engineering team for your venture.",
+    "Hire TRYN Studios for a dedicated product engineering team. AI development, SaaS builds, and venture studio partnerships for founders and companies.",
   path: "/contact",
 });
 
@@ -18,7 +18,7 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
-        eyebrow="Contact"
+        eyebrow="TRYN Studios · Contact"
         title="Hire TRYN"
         lead="Tell us about your project and we'll get back to you within 24 hours."
       />

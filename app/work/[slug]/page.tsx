@@ -9,7 +9,7 @@ import { Stagger, StaggerItem } from "@/components/shared/stagger";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { caseStudies, clientDeliveries, getCaseStudyBySlug } from "@/lib/case-studies";
-import { createPageMetadata } from "@/lib/metadata";
+import { createBreadcrumbJsonLd, createPageMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site-config";
 
 type Props = {
@@ -43,28 +43,40 @@ export default async function CaseStudyPage({ params }: Props) {
         .slice(0, 2)
     : [];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": study.isInternal ? "Article" : "CreativeWork",
-    name: study.title,
-    headline: study.title,
-    description: study.summary,
-    ...(study.image ? { image: `${siteConfig.url}${study.image}` } : {}),
-    author: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      parentOrganization: {
+  const imageAlt =
+    study.legalName != null
+      ? `${study.title} for ${study.legalName}, engineered by TRYN Studios`
+      : `${study.title}, engineered by TRYN Studios`;
+
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": study.isInternal ? "Article" : "CreativeWork",
+      name: study.title,
+      headline: study.title,
+      description: study.summary,
+      ...(study.image ? { image: `${siteConfig.url}${study.image}` } : {}),
+      author: {
+        "@type": "Organization",
+        name: siteConfig.name,
+        parentOrganization: {
+          "@type": "Organization",
+          name: siteConfig.parentCompany.legalName,
+        },
+      },
+      publisher: {
         "@type": "Organization",
         name: siteConfig.parentCompany.legalName,
       },
+      about: study.title,
+      url: `${siteConfig.url}/work/${slug}`,
     },
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.parentCompany.legalName,
-    },
-    about: study.title,
-    url: `${siteConfig.url}/work/${slug}`,
-  };
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Work", path: "/work" },
+      { name: study.title, path: `/work/${slug}` },
+    ]),
+  ];
 
   return (
     <>
@@ -118,7 +130,7 @@ export default async function CaseStudyPage({ params }: Props) {
                 <div className="relative aspect-[21/9] max-h-[28rem] overflow-hidden rounded-lg border border-border bg-soft-gray">
                   <Image
                     src={study.image}
-                    alt=""
+                    alt={imageAlt}
                     fill
                     className="object-cover"
                     sizes="(max-width: 1280px) 100vw, 1280px"

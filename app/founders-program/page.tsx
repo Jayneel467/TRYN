@@ -11,7 +11,7 @@ import { createPageMetadata } from "@/lib/metadata";
 export const metadata: Metadata = createPageMetadata({
   title: "Founders Program",
   description:
-    "Apply to the TRYN Founders Program. Selected startups may receive technology development through equity or hybrid partnership.",
+    "Apply to the TRYN Studios Founders Program. Selected startups receive product engineering through equity or hybrid venture studio partnership.",
   path: "/founders-program",
 });
 

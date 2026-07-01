@@ -14,10 +14,11 @@ import { createPageMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = createPageMetadata({
-  title: siteConfig.tagline.replace(/\.$/, ""),
-  description: siteConfig.description,
+  title: "Product Engineering Studio & Venture Partner",
+  description:
+    "TRYN Studios is a product engineering studio and AI venture partner. We build products, run growth marketing, and embed dedicated engineering teams for founders and companies.",
   path: "/",
-  imageAlt: `${siteConfig.name} | ${siteConfig.tagline}`,
+  imageAlt: `${siteConfig.name} | Product engineering studio and venture partner`,
 });
 
 const faqJsonLd = {

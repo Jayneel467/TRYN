@@ -14,7 +14,7 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = createPageMetadata({
   title: "About",
   description:
-    "TRYN Studios is an early-stage venture product engineering team, building Itinero Travels and partnering with selected founders.",
+    "TRYN Studios is an early-stage product engineering studio and venture partner, building Itinero Travels and partnering with selected founders.",
   path: "/about",
 });
 

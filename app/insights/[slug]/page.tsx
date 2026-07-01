@@ -5,7 +5,7 @@ import { FadeIn } from "@/components/shared/fade-in";
 import { PageHero } from "@/components/shared/page-hero";
 import { Button } from "@/components/ui/button";
 import { getInsightBySlug, insightPosts, parseInsightParagraph } from "@/lib/insights";
-import { createPageMetadata } from "@/lib/metadata";
+import { createBreadcrumbJsonLd, createPageMetadata } from "@/lib/metadata";
 import { siteConfig } from "@/lib/site-config";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -30,16 +30,23 @@ export default async function InsightPostPage({ params }: Props) {
   const post = getInsightBySlug(slug);
   if (!post) notFound();
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.title,
-    description: post.description,
-    datePublished: post.publishedAt,
-    author: { "@type": "Organization", name: siteConfig.name },
-    publisher: { "@type": "Organization", name: siteConfig.name },
-    url: `${siteConfig.url}/insights/${slug}`,
-  };
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: post.title,
+      description: post.description,
+      datePublished: post.publishedAt,
+      author: { "@type": "Organization", name: siteConfig.name },
+      publisher: { "@type": "Organization", name: siteConfig.name },
+      url: `${siteConfig.url}/insights/${slug}`,
+    },
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Insights", path: "/insights" },
+      { name: post.title, path: `/insights/${slug}` },
+    ]),
+  ];
 
   return (
     <>

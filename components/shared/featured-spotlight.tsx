@@ -16,6 +16,7 @@ type FeaturedSpotlightProps = {
   externalUrl?: string;
   badge?: string;
   image?: string;
+  imageAlt?: string;
   className?: string;
   frame?: boolean;
 };
@@ -31,6 +32,7 @@ export function FeaturedSpotlight({
   externalUrl,
   badge = "Featured",
   image,
+  imageAlt,
   className,
   frame = false,
 }: FeaturedSpotlightProps) {
@@ -43,7 +45,7 @@ export function FeaturedSpotlight({
     >
       <Image
         src={image}
-        alt=""
+        alt={imageAlt ?? `${title} by TRYN Studios`}
         fill
         className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
         sizes="(max-width: 1024px) 100vw, 28rem"
