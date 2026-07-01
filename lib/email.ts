@@ -46,6 +46,7 @@ async function sendViaWeb3Forms(options: SendEmailOptions): Promise<SendEmailRes
 
   const body: Record<string, unknown> = {
     access_key: env.web3formsAccessKey,
+    name: options.fromName ?? "TRYN Studios",
     subject: options.subject,
     from_name: options.fromName ?? "TRYN Studios",
     message: options.text,
@@ -62,14 +63,30 @@ async function sendViaWeb3Forms(options: SendEmailOptions): Promise<SendEmailRes
     }));
   }
 
-  const res = await fetch("https://api.web3forms.com/submit", {
+  const res = await fetch(`https://${"api.web3forms.com"}/submit`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
   });
 
-  const data = (await res.json()) as { success?: boolean; message?: string };
+  const raw = await res.text();
+  let data: { success?: boolean; message?: string } = {};
+  try {
+    data = JSON.parse(raw) as { success?: boolean; message?: string };
+  } catch {
+    console.error("[Web3Forms] Non-JSON response:", res.status, raw);
+    return { ok: false, error: raw || `Web3Forms HTTP ${res.status}` };
+  }
+
   if (!res.ok || !data.success) {
+    console.error("[Web3Forms] Server-side submission failed:", res.status, raw);
+    if (res.status === 403) {
+      return {
+        ok: false,
+        error:
+          "Web3Forms blocks server-side API calls (403). Set NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY and submit from the browser.",
+      };
+    }
     return { ok: false, error: data.message ?? `Web3Forms HTTP ${res.status}` };
   }
 

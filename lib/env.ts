@@ -16,6 +16,7 @@ function optionalInt(name: string): number | undefined {
 
 export const env = {
   web3formsAccessKey: optional("WEB3FORMS_ACCESS_KEY"),
+  nextPublicWeb3formsAccessKey: optional("NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY"),
   smtpHost: optional("SMTP_HOST"),
   smtpPort: optionalInt("SMTP_PORT"),
   smtpUser: optional("SMTP_USER"),
@@ -34,7 +35,8 @@ export const env = {
 
 export function isEmailConfigured(): boolean {
   return Boolean(
-    env.web3formsAccessKey ||
+    env.nextPublicWeb3formsAccessKey ||
+      env.web3formsAccessKey ||
       (env.smtpHost && env.smtpUser && env.smtpPass) ||
       (env.resendApiKey && env.contactToEmail && env.contactFromEmail)
   );

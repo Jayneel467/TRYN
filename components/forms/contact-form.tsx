@@ -18,6 +18,51 @@ import {
 } from "@/components/ui/select";
 import { siteConfig } from "@/lib/site-config";
 
+const formEndpoint = `https://${"api.web3forms.com"}/submit`;
+
+function getFormAccessKey(): string | undefined {
+  const key = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+  return key && key.length > 0 ? key : undefined;
+}
+
+function isBrowserFormConfigured(): boolean {
+  return Boolean(getFormAccessKey());
+}
+
+async function submitBrowserForm(payload: Record<string, string>): Promise<boolean> {
+  const accessKey = getFormAccessKey();
+  if (!accessKey) return false;
+
+  const res = await fetch(formEndpoint, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      access_key: accessKey,
+      botcheck: false,
+      ...payload,
+    }),
+  });
+
+  const raw = await res.text();
+  let data: { success?: boolean; message?: string } = {};
+  try {
+    data = JSON.parse(raw) as { success?: boolean; message?: string };
+  } catch {
+    console.error("[Contact] Form provider non-JSON response:", res.status, raw);
+    return false;
+  }
+
+  if (!res.ok || !data.success) {
+    console.error("[Contact] Form provider error:", res.status, data);
+    return false;
+  }
+
+  return true;
+}
+
 const contactSchema = z.object({
   name: z.string().min(2, "Name is required"),
   email: z.string().email("Valid email required"),
@@ -29,6 +74,29 @@ const contactSchema = z.object({
 });
 
 type ContactForm = z.infer<typeof contactSchema>;
+
+function buildContactPayload(data: ContactForm): Record<string, string> {
+  return {
+    name: data.name,
+    email: data.email,
+    subject: `Contact: ${data.company} — ${data.projectType}`,
+    from_name: data.name,
+    company: data.company,
+    role: data.role,
+    projectType: data.projectType,
+    budget: data.budget ?? "Not specified",
+    message: [
+      `Name: ${data.name}`,
+      `Email: ${data.email}`,
+      `Company: ${data.company}`,
+      `Role: ${data.role}`,
+      `Project type: ${data.projectType}`,
+      `Budget: ${data.budget ?? "Not specified"}`,
+      "",
+      data.message,
+    ].join("\n"),
+  };
+}
 
 export function ContactForm() {
   const [submitting, setSubmitting] = useState(false);
@@ -53,6 +121,13 @@ export function ContactForm() {
     setSubmitting(true);
     setSubmitError("");
     try {
+      if (isBrowserFormConfigured()) {
+        const ok = await submitBrowserForm(buildContactPayload(data));
+        if (!ok) throw new Error("Failed");
+        setSuccess(true);
+        return;
+      }
+
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

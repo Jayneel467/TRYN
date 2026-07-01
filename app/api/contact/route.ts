@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     });
 
     if (!result.ok) {
-      console.error("[Contact] Email error:", result.error);
+      console.error("[Contact] Email error:", result.error, "provider attempted from server route");
       return jsonError("Failed to send message", 502);
     }
 

@@ -18,6 +18,45 @@ import {
 } from "@/components/ui/select";
 import { siteConfig } from "@/lib/site-config";
 
+const formEndpoint = `https://${"api.web3forms.com"}/submit`;
+
+function getFormAccessKey(): string | undefined {
+  const key = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+  return key && key.length > 0 ? key : undefined;
+}
+
+function isBrowserFormConfigured(): boolean {
+  return Boolean(getFormAccessKey());
+}
+
+async function submitBrowserFormData(formData: FormData): Promise<boolean> {
+  const accessKey = getFormAccessKey();
+  if (!accessKey) return false;
+
+  formData.set("access_key", accessKey);
+
+  const res = await fetch(formEndpoint, {
+    method: "POST",
+    body: formData,
+  });
+
+  const raw = await res.text();
+  let data: { success?: boolean; message?: string } = {};
+  try {
+    data = JSON.parse(raw) as { success?: boolean; message?: string };
+  } catch {
+    console.error("[Pitch Deck] Form provider non-JSON response:", res.status, raw);
+    return false;
+  }
+
+  if (!res.ok || !data.success) {
+    console.error("[Pitch Deck] Form provider error:", res.status, data);
+    return false;
+  }
+
+  return true;
+}
+
 const pitchDeckSchema = z.object({
   founderName: z.string().min(2, "Name is required"),
   email: z.string().email("Valid email required"),
@@ -28,6 +67,30 @@ const pitchDeckSchema = z.object({
 });
 
 type PitchDeckForm = z.infer<typeof pitchDeckSchema>;
+
+function buildPitchDeckFormData(data: PitchDeckForm, file: File): FormData {
+  const formData = new FormData();
+  formData.append("name", data.founderName);
+  formData.append("email", data.email);
+  formData.append("subject", `Founders Program: ${data.companyName} (${data.stage})`);
+  formData.append("from_name", data.founderName);
+  formData.append("companyName", data.companyName);
+  formData.append("website", data.website || "N/A");
+  formData.append("stage", data.stage);
+  formData.append("message", [
+    `Founder: ${data.founderName}`,
+    `Email: ${data.email}`,
+    `Company: ${data.companyName}`,
+    `Website: ${data.website || "N/A"}`,
+    `Stage: ${data.stage}`,
+    "",
+    data.description,
+    "",
+    `Attachment: ${file.name} (${file.size} bytes)`,
+  ].join("\n"));
+  formData.append("attachment", file);
+  return formData;
+}
 
 export function PitchDeckForm() {
   const [file, setFile] = useState<File | null>(null);
@@ -82,6 +145,13 @@ export function PitchDeckForm() {
     }
     setSubmitting(true);
     try {
+      if (isBrowserFormConfigured()) {
+        const ok = await submitBrowserFormData(buildPitchDeckFormData(data, file));
+        if (!ok) throw new Error("Submission failed");
+        setSuccess(true);
+        return;
+      }
+
       const formData = new FormData();
       Object.entries(data).forEach(([key, value]) => formData.append(key, value));
       formData.append("pitchDeck", file);

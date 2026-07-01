@@ -75,7 +75,7 @@ export async function POST(request: Request) {
     });
 
     if (!result.ok) {
-      console.error("[Pitch Deck] Email error:", result.error);
+      console.error("[Pitch Deck] Email error:", result.error, "provider attempted from server route");
       return jsonError("Failed to submit application", 502);
     }
 
