@@ -1,5 +1,6 @@
 import { jsonError, jsonSuccess } from "@/lib/api-utils";
-import { env, isEmailConfigured } from "@/lib/env";
+import { sendEmail } from "@/lib/email";
+import { isEmailConfigured } from "@/lib/env";
 import { pitchDeckSchema } from "@/lib/validations";
 
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
@@ -49,47 +50,32 @@ export async function POST(request: Request) {
       console.info("[Pitch Deck — email not configured]", submission);
       return jsonSuccess({
         queued: false,
-        message: "Received (email delivery pending configuration)",
+        message: "Received (add WEB3FORMS_ACCESS_KEY to enable delivery)",
       });
     }
 
     const buffer = Buffer.from(await pitchDeck.arrayBuffer());
-    const base64 = buffer.toString("base64");
 
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.resendApiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: env.contactFromEmail,
-        to: [env.contactToEmail],
-        reply_to: parsed.data.email,
-        subject: `Founders Program: ${parsed.data.companyName} (${parsed.data.stage})`,
-        text: [
-          `Founder: ${parsed.data.founderName}`,
-          `Email: ${parsed.data.email}`,
-          `Company: ${parsed.data.companyName}`,
-          `Website: ${parsed.data.website || "N/A"}`,
-          `Stage: ${parsed.data.stage}`,
-          "",
-          parsed.data.description,
-          "",
-          `Attachment: ${pitchDeck.name} (${pitchDeck.size} bytes)`,
-        ].join("\n"),
-        attachments: [
-          {
-            filename: pitchDeck.name,
-            content: base64,
-          },
-        ],
-      }),
+    const result = await sendEmail({
+      subject: `Founders Program: ${parsed.data.companyName} (${parsed.data.stage})`,
+      replyTo: parsed.data.email,
+      fromName: parsed.data.founderName,
+      text: [
+        `Founder: ${parsed.data.founderName}`,
+        `Email: ${parsed.data.email}`,
+        `Company: ${parsed.data.companyName}`,
+        `Website: ${parsed.data.website || "N/A"}`,
+        `Stage: ${parsed.data.stage}`,
+        "",
+        parsed.data.description,
+        "",
+        `Attachment: ${pitchDeck.name} (${pitchDeck.size} bytes)`,
+      ].join("\n"),
+      attachments: [{ filename: pitchDeck.name, content: buffer }],
     });
 
-    if (!res.ok) {
-      const detail = await res.text();
-      console.error("[Pitch Deck] Resend error:", detail);
+    if (!result.ok) {
+      console.error("[Pitch Deck] Email error:", result.error);
       return jsonError("Failed to submit application", 502);
     }
 

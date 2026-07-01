@@ -76,11 +76,11 @@ export function ContactForm() {
     return (
       <div className="form-pending-panel">
         <h3 className="text-xl font-semibold text-foreground">
-          Delivery not configured yet
+          Message received
         </h3>
         <p className="mt-2 text-muted">
-          We received your message, but outbound email is not configured on this
-          environment yet. Please email us directly at{" "}
+          We saved your message, but email delivery is not set up on this site
+          yet. For a faster reply, email us directly at{" "}
           <a
             href={`mailto:${siteConfig.contact.email}`}
             className="font-medium text-saffron hover:text-saffron-hover"

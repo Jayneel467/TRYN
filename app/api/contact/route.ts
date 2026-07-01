@@ -1,5 +1,6 @@
 import { jsonError, jsonSuccess, parseJsonBody } from "@/lib/api-utils";
-import { env, isEmailConfigured } from "@/lib/env";
+import { sendEmail } from "@/lib/email";
+import { isEmailConfigured } from "@/lib/env";
 import { contactSchema } from "@/lib/validations";
 
 export async function POST(request: Request) {
@@ -15,37 +16,31 @@ export async function POST(request: Request) {
 
   if (!isEmailConfigured()) {
     console.info("[Contact Submission — email not configured]", parsed.data);
-    return jsonSuccess({ queued: false, message: "Received (email delivery pending configuration)" });
+    return jsonSuccess({
+      queued: false,
+      message: "Received (add WEB3FORMS_ACCESS_KEY to enable delivery)",
+    });
   }
 
   try {
-    const res = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.resendApiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: env.contactFromEmail,
-        to: [env.contactToEmail],
-        reply_to: parsed.data.email,
-        subject: `Contact: ${parsed.data.company} — ${parsed.data.projectType}`,
-        text: [
-          `Name: ${parsed.data.name}`,
-          `Email: ${parsed.data.email}`,
-          `Company: ${parsed.data.company}`,
-          `Role: ${parsed.data.role}`,
-          `Project type: ${parsed.data.projectType}`,
-          `Budget: ${parsed.data.budget ?? "Not specified"}`,
-          "",
-          parsed.data.message,
-        ].join("\n"),
-      }),
+    const result = await sendEmail({
+      subject: `Contact: ${parsed.data.company} — ${parsed.data.projectType}`,
+      replyTo: parsed.data.email,
+      fromName: parsed.data.name,
+      text: [
+        `Name: ${parsed.data.name}`,
+        `Email: ${parsed.data.email}`,
+        `Company: ${parsed.data.company}`,
+        `Role: ${parsed.data.role}`,
+        `Project type: ${parsed.data.projectType}`,
+        `Budget: ${parsed.data.budget ?? "Not specified"}`,
+        "",
+        parsed.data.message,
+      ].join("\n"),
     });
 
-    if (!res.ok) {
-      const detail = await res.text();
-      console.error("[Contact] Resend error:", detail);
+    if (!result.ok) {
+      console.error("[Contact] Email error:", result.error);
       return jsonError("Failed to send message", 502);
     }
 

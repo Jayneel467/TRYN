@@ -104,11 +104,11 @@ export function PitchDeckForm() {
     return (
       <div className="form-pending-panel">
         <h3 className="text-xl font-semibold text-foreground">
-          Delivery not configured yet
+          Application received
         </h3>
         <p className="mt-2 text-muted">
-          We received your application details, but outbound email is not configured on
-          this environment. Please email your pitch deck to{" "}
+          We saved your application details, but email delivery is not set up on
+          this site yet. Please email your pitch deck to{" "}
           <a
             href={`mailto:${siteConfig.contact.email}`}
             className="font-medium text-saffron hover:text-saffron-hover"

@@ -7,7 +7,19 @@ function optionalWithDefault(name: string, defaultValue: string): string {
   return optional(name) ?? defaultValue;
 }
 
+function optionalInt(name: string): number | undefined {
+  const value = optional(name);
+  if (!value) return undefined;
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed) ? parsed : undefined;
+}
+
 export const env = {
+  web3formsAccessKey: optional("WEB3FORMS_ACCESS_KEY"),
+  smtpHost: optional("SMTP_HOST"),
+  smtpPort: optionalInt("SMTP_PORT"),
+  smtpUser: optional("SMTP_USER"),
+  smtpPass: optional("SMTP_PASS"),
   resendApiKey: optional("RESEND_API_KEY"),
   contactToEmail: optionalWithDefault("CONTACT_TO_EMAIL", "support@tryn.studio"),
   contactFromEmail: optionalWithDefault(
@@ -21,5 +33,9 @@ export const env = {
 } as const;
 
 export function isEmailConfigured(): boolean {
-  return Boolean(env.resendApiKey && env.contactToEmail && env.contactFromEmail);
+  return Boolean(
+    env.web3formsAccessKey ||
+      (env.smtpHost && env.smtpUser && env.smtpPass) ||
+      (env.resendApiKey && env.contactToEmail && env.contactFromEmail)
+  );
 }

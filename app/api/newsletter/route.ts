@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { jsonError, jsonSuccess, parseJsonBody } from "@/lib/api-utils";
-import { env } from "@/lib/env";
+import { sendEmail } from "@/lib/email";
+import { isEmailConfigured } from "@/lib/env";
 
 const schema = z.object({ email: z.string().email() });
 
@@ -15,30 +16,28 @@ export async function POST(request: Request) {
     return jsonError("Invalid email", 400);
   }
 
-  if (!env.resendApiKey || !env.newsletterAudienceId) {
-    console.info("[Newsletter — not configured]", parsed.data.email);
-    return jsonSuccess({ subscribed: false, message: "Received (audience sync pending configuration)" });
+  if (!isEmailConfigured()) {
+    console.info("[Newsletter — email not configured]", parsed.data.email);
+    return jsonSuccess({
+      subscribed: false,
+      message: "Received (add WEB3FORMS_ACCESS_KEY to enable signup notifications)",
+    });
   }
 
   try {
-    const res = await fetch(
-      `https://api.resend.com/audiences/${env.newsletterAudienceId}/contacts`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${env.resendApiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: parsed.data.email,
-          unsubscribed: false,
-        }),
-      }
-    );
+    const result = await sendEmail({
+      subject: `Newsletter signup: ${parsed.data.email}`,
+      replyTo: parsed.data.email,
+      text: [
+        "New newsletter subscription request.",
+        "",
+        `Email: ${parsed.data.email}`,
+        `Time: ${new Date().toISOString()}`,
+      ].join("\n"),
+    });
 
-    if (!res.ok) {
-      const detail = await res.text();
-      console.error("[Newsletter] Resend error:", detail);
+    if (!result.ok) {
+      console.error("[Newsletter] Email error:", result.error);
       return jsonError("Failed to subscribe", 502);
     }
 
