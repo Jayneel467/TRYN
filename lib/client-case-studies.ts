@@ -338,13 +338,13 @@ export const clientCaseStudies: CaseStudy[] = [
   {
     slug: "wyndham-long-island-ai",
     title: "Hotel AI for Direct Bookings",
-    legalName: "Wyndham Long Island, USA",
+    legalName: "Days Inn by Wyndham, Long Island, USA",
     category: "Hospitality",
     status: "Delivered",
     description:
-      "AI guest engagement and booking assistant that drove measurable uplift in direct reservations and reduced reliance on OTAs for Wyndham Long Island.",
+      "AI guest engagement and booking assistant that drove measurable uplift in direct reservations and reduced reliance on OTAs for Days Inn by Wyndham Long Island.",
     summary:
-      "TRYN Studios engineered a hospitality AI system for Wyndham Long Island that captures more direct bookings, automates guest communication, and strengthens the property's direct revenue channel.",
+      "TRYN Studios engineered a hospitality AI system for Days Inn by Wyndham Long Island that captures more direct bookings, automates guest communication, and strengthens the property's direct revenue channel.",
     metrics: [
       { label: "Direct bookings", value: "Uplift" },
       { label: "Guest comms", value: "24/7" },
@@ -354,9 +354,9 @@ export const clientCaseStudies: CaseStudy[] = [
     color: "from-slate-600/20 to-blue-500/20",
     featured: false,
     isInternal: false,
-    ...deliveryMeta("wyndham-long-island-ai"),
+    image: workImage("wyndham-long-island-ai"),
     challenge:
-      "Wyndham Long Island depended heavily on online travel agencies for visibility and bookings. Commission costs cut into margins, and front-desk staff spent hours answering repetitive questions about rates, amenities, and availability. Guests who wanted to book direct often bounced before completing a reservation.",
+      "Days Inn by Wyndham Long Island depended heavily on online travel agencies for visibility and bookings. Commission costs cut into margins, and front-desk staff spent hours answering repetitive questions about rates, amenities, and availability. Guests who wanted to book direct often bounced before completing a reservation.",
     solution:
       "TRYN Studios built an AI hospitality assistant integrated with the property's booking flow and guest communication channels. The system answers pre-stay questions in natural language, guides visitors toward direct reservations, and keeps guests informed from inquiry through check-in without adding headcount.",
     outcomes: [
